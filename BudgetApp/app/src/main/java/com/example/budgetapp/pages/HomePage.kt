@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.example.budgetapp.home_page
+package com.example.budgetapp.pages
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -37,49 +37,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.budgetapp.Destination
+import com.example.budgetapp.TopAppBarTemplate
 import com.example.budgetapp.data.DateEntity
 import com.example.budgetapp.data.ItemEntity
 import com.example.budgetapp.viewmodels.MainViewModel
 
 @Composable
 fun HomePage(mainViewModel: MainViewModel, navController: NavHostController) {
-    val dateEntitiesSize = mainViewModel.readAllDataDateEntity.observeAsState(emptyList()).value
-
     Scaffold(topBar = {
-        TopAppBar(
-            navigationIcon = {
-                IconButton(onClick = {
-                    mainViewModel.addDate(DateEntity(1, 1, "Styczeń", 2001))
-                    mainViewModel.addDate(DateEntity(2, 12, "Luty", 2023))
-
-                    mainViewModel.addItem(ItemEntity(1, "a", 1.2, 1))
-                    mainViewModel.addItem(ItemEntity(2, "b", 1.3, 1))
-                    mainViewModel.addItem(ItemEntity(3, "c", 1.4, 2))
-
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.Menu, contentDescription = "Menu Icon"
-                    )
-                }
-            },
-            actions = {
-                IconButton(onClick = {
-                    mainViewModel.dropDateDataBase()
-                    mainViewModel.dropItemDataBase()
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack, contentDescription = "Menu Icon"
-                    )
-                }
-            },
-            title = {
-                Text("Home")
-            },
-            colors = TopAppBarDefaults.smallTopAppBarColors(
-                containerColor = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp)
-            )
-        )
-
+        TopAppBarTemplate()
     }, content = { padding ->
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -92,7 +58,7 @@ fun HomePage(mainViewModel: MainViewModel, navController: NavHostController) {
                     .shadow(elevation = 9.dp, shape = RoundedCornerShape(50.dp)),
                 containerColor = Color.Gray,
                 onClick = {
-
+                    navController.navigate(Destination.AddingPage.route)
                 }
             ) {
                 Icon(Icons.Default.Add, "")
@@ -127,5 +93,4 @@ fun CustomList(
             }
         }
     }
-
 }

@@ -1,4 +1,4 @@
-package com.example.budgetapp.content_page
+package com.example.budgetapp.pages
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,7 +16,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.budgetapp.Destination
 import com.example.budgetapp.viewmodels.MainViewModel
 
 @Composable

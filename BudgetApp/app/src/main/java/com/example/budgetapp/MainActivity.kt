@@ -11,8 +11,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.budgetapp.content_page.ContentPage
-import com.example.budgetapp.home_page.HomePage
+import com.example.budgetapp.pages.AddingPage
+import com.example.budgetapp.pages.ContentPage
+import com.example.budgetapp.pages.HomePage
 import com.example.budgetapp.ui.theme.BudgetAppTheme
 import com.example.budgetapp.viewmodels.MainViewModel
 
@@ -49,9 +50,11 @@ fun NavigationAppHost(navController: NavHostController, mainViewModel: MainViewM
                 )
             }
         }
-        composable(Destination.TotalPage.route) { navBackStackEntry ->
+        composable(Destination.TotalPage.route) {
 
-
+        }
+        composable(Destination.AddingPage.route) {
+            AddingPage()
         }
     }
 }
@@ -63,21 +66,4 @@ fun GreetingPreview() {
     BudgetAppTheme {
         MainActivity()
     }
-}/*Column {
-                        Button(onClick = {
-                            mainVm.addDate(DateEntity(1, 111))
-                            mainVm.addDate(DateEntity(2, 222))
-
-                            mainVm.addItem(ItemEntity(1, "a", 1.2, 1))
-                            mainVm.addItem(ItemEntity(2, "b", 1.3, 1))
-                            mainVm.addItem(ItemEntity(3, "c", 1.4, 2))
-                        }) {
-
-                        }
-                    }
-                    val itemEntities = mainVm.readAllDataDateEntity.observeAsState(emptyList()).value
-                    LazyColumn {
-                        items(itemEntities){ col ->
-
-                        }
-                    }*/
+}
