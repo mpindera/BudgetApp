@@ -3,6 +3,7 @@ package com.example.budgetapp.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.budgetapp.data.DateEntity
 import com.example.budgetapp.data.ItemEntity
@@ -13,6 +14,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
+
+    val myString = listOf("Day:","Month:","Year:")
 
     val readAllData: LiveData<List<ItemEntity>>
     val itemImplementation: ItemImpl

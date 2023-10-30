@@ -39,6 +39,7 @@ import com.example.budgetapp.StaticObjects.inputModifier
 import com.example.budgetapp.StaticObjects.months
 import com.example.budgetapp.StaticObjects.years
 import com.example.budgetapp.TopAppBarTemplate
+import com.example.budgetapp.viewmodels.MainViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,8 +51,7 @@ fun TextFieldRow(
         value = selectedValue, onValueChange = {
             onSelectedItem(it)
         }, readOnly = true, modifier = modifier, colors = TextFieldDefaults.textFieldColors(
-            focusedIndicatorColor = Color.Transparent,
-            unfocusedIndicatorColor = Color.Transparent
+            focusedIndicatorColor = Color.Transparent, unfocusedIndicatorColor = Color.Transparent
         ), textStyle = TextStyle(
             fontSize = 16.sp, textAlign = TextAlign.Center
         )
@@ -79,7 +79,6 @@ fun ScrollButtonRow(
             items(items) { item ->
                 val isSelected = item == selectedValue
                 val buttonColor = if (isSelected) borderColor else Color.Black
-
                 OutlinedButton(
                     modifier = Modifier.padding(
                         top = 2.dp, bottom = 2.dp, start = 3.dp, end = 3.dp
@@ -100,7 +99,7 @@ fun ScrollButtonRow(
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddingPage() {
+fun AddingPage(mainViewModel: MainViewModel) {
     var dayChosen by remember {
         mutableStateOf("")
     }
@@ -123,7 +122,7 @@ fun AddingPage() {
                     items = days,
                     selectedValue = dayChosen,
                     onSelectedItem = { dayChosen = it },
-                    label = "Day:",
+                    label = mainViewModel.myString[0],
                     borderColor = Color(0xFF9E723D)
 
                 )
@@ -131,14 +130,14 @@ fun AddingPage() {
                     items = months,
                     selectedValue = monthChosen,
                     onSelectedItem = { monthChosen = it },
-                    label = "Month:",
+                    label = mainViewModel.myString[1],
                     borderColor = Color(0xFF423627)
                 )
                 ScrollButtonRow(
                     items = years,
                     selectedValue = yearChosen,
                     onSelectedItem = { yearChosen = it },
-                    label = "Year:",
+                    label = mainViewModel.myString[2],
                     borderColor = Color(0xFF423627)
                 )
                 Row(
