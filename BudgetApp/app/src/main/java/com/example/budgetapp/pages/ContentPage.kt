@@ -1,5 +1,6 @@
 package com.example.budgetapp.pages
 
+import androidx.activity.viewModels
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,13 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.budgetapp.viewmodels.MainViewModel
 
 @Composable
 fun ContentPage(mainViewModel: MainViewModel, navController: NavHostController, dateId: Int) {
-    val dateEntities = mainViewModel.readAllData.observeAsState(emptyList()).value
+    val dateEntities = mainViewModel.readAllDataItemEntity.observeAsState(emptyList()).value
     val filteredItems = dateEntities.filter { it.dateId == dateId }
     LazyVerticalGrid(columns = GridCells.Fixed(2)) {
         items(filteredItems) { item ->

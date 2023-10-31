@@ -1,18 +1,15 @@
 package com.example.budgetapp.data
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 @Entity(tableName = "date_entity")
 data class DateEntity(
 
     @PrimaryKey(autoGenerate = true)
-    val dateId: Int,
-    val day: Int,
+    val dateId: Int = 0,
+    val day: String,
     val month: String,
-    val year: Int
+    val year: String,
+    val colorOfSpacer: Int
 )

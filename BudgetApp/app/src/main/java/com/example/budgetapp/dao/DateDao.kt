@@ -8,9 +8,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Transaction
 import com.example.budgetapp.data.DateEntity
-import com.example.budgetapp.data.ItemEntity
 import com.example.budgetapp.relactions.DateWithItems
-import java.util.Date
 
 @Dao
 interface DateDao {
@@ -23,6 +21,10 @@ interface DateDao {
     @Transaction
     @Query("SELECT * FROM DATE_ENTITY WHERE dateId = :dateId")
     suspend fun getDateWithItems(dateId: Int): List<DateWithItems>
+
+    @Transaction
+    @Query("SELECT EXISTS(SELECT * FROM DATE_ENTITY WHERE day = :day AND month = :month AND year = :year)")
+    suspend fun checkIfDateExists(day: String, month: String, year: String): Boolean
 
     @Delete
     suspend fun deleteDate(date: DateEntity)
