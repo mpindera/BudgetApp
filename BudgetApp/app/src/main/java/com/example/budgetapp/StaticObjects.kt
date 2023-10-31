@@ -3,6 +3,7 @@ package com.example.budgetapp
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import java.util.Calendar
@@ -38,6 +39,9 @@ object StaticObjects {
         )
     )
 
+    val gradientBrush = Brush.horizontalGradient(
+        colors = listOf(Color(0xFFFD418D), Color(0xFF818181)),
+    )
 
 
 }
