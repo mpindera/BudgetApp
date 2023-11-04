@@ -29,7 +29,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BudgetAppTheme {
-
                 val navController = rememberNavController()
                 NavigationAppHost(navController = navController, mainViewModel = mainViewModel)
 
@@ -55,11 +54,11 @@ fun NavigationAppHost(navController: NavHostController, mainViewModel: MainViewM
                 )
             }
         }
-        composable(Destination.TotalPage.route) {
-
-        }
         composable(Destination.AddingPage.route) {
             AddingPage(mainViewModel,navController)
+        }
+        composable(Destination.TotalPage.route) {
+
         }
     }
 }

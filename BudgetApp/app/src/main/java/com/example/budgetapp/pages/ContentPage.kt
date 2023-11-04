@@ -18,10 +18,12 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.example.budgetapp.SelectionOfPages
 import com.example.budgetapp.viewmodels.MainViewModel
 
 @Composable
 fun ContentPage(mainViewModel: MainViewModel, navController: NavHostController, dateId: Int) {
+    mainViewModel.updateSelection(SelectionOfPages.CONTENT)
     val dateEntities = mainViewModel.readAllDataItemEntity.observeAsState(emptyList()).value
     val filteredItems = dateEntities.filter { it.dateId == dateId }
     LazyVerticalGrid(columns = GridCells.Fixed(2)) {

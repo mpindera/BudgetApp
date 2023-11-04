@@ -30,8 +30,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -45,14 +43,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.budgetapp.R
+import com.example.budgetapp.SelectionOfPages
 import com.example.budgetapp.StaticObjects.colorSpacer
 import com.example.budgetapp.StaticObjects.days
 import com.example.budgetapp.StaticObjects.gradientBrush
@@ -63,28 +60,13 @@ import com.example.budgetapp.data.DateEntity
 import com.example.budgetapp.viewmodels.MainViewModel
 import kotlinx.coroutines.runBlocking
 
-@RequiresApi(Build.VERSION_CODES.O)
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TextFieldRow(
-    selectedValue: String, onSelectedItem: (String) -> Unit, modifier: Modifier
-) {
-    TextField(
-        value = selectedValue, onValueChange = {
-            onSelectedItem(it)
-        }, readOnly = true, modifier = modifier, colors = TextFieldDefaults.textFieldColors(
-            focusedIndicatorColor = Color.Transparent, unfocusedIndicatorColor = Color.Transparent
-        ), textStyle = TextStyle(
-            fontSize = 15.sp, textAlign = TextAlign.Center
-        )
-    )
-}
-@Composable
-fun ScrollButtonRow(
-    items: List<String>,
-    selectedValue: String,
-    onSelectedItem: (String) -> Unit,
+fun <T> ScrollButtonRow(
+    items: List<T>,
+    selectedValue: T,
+    onSelectedItem: (T) -> Unit,
     label: String,
+    showText: Boolean,
     borderColor: Color
 ) {
     Text(
@@ -95,11 +77,9 @@ fun ScrollButtonRow(
             start = 5.dp, end = 5.dp, bottom = 5.dp, top = 20.dp
         )
     )
-    Row() {
+    Row {
         LazyRow {
             items(items) { item ->
-                val isSelected = item == selectedValue
-                val buttonColor = if (isSelected) borderColor else Color.Black
                 OutlinedButton(
                     modifier = Modifier.padding(
                         top = 2.dp, bottom = 2.dp, start = 3.dp, end = 3.dp
@@ -107,51 +87,21 @@ fun ScrollButtonRow(
                         width = 2.dp, color = Color(0xFF9E723D)
                     ), onClick = {
                         onSelectedItem(item)
-                    }, colors = ButtonDefaults.outlinedButtonColors(contentColor = buttonColor)
+                    }, colors = ButtonDefaults.outlinedButtonColors(
+                        containerColor = when (item) {
+                            is Color -> item
+                            else -> Color.Transparent
+                        }
+                    )
                 ) {
-                    Text(text = item, color = Color.Black)
+                    if (showText) {
+                        Text(text = item.toString(), color = Color.Black)
+                    }
                 }
             }
         }
     }
 }
-@Composable
-fun ScrollButtonRowColor(
-    items: List<Color>,
-    selectedValue: Color,
-    onSelectedItem: (Color) -> Unit,
-    label: String,
-    borderColor: Color
-) {
-    Text(
-        text = label,
-        style = MaterialTheme.typography.bodyLarge,
-        fontFamily = FontFamily.Serif,
-        modifier = Modifier.padding(
-            start = 5.dp, end = 5.dp, bottom = 5.dp, top = 20.dp
-        )
-    )
-    Row() {
-        LazyRow {
-            items(items) { colorItem ->
-                val isSelected = colorItem == selectedValue
-                val buttonColor = if (isSelected) borderColor else Color.Black
-                OutlinedButton(
-                    modifier = Modifier.padding(
-                        top = 2.dp, bottom = 2.dp, start = 3.dp, end = 3.dp
-                    ), shape = RoundedCornerShape(percent = 15), border = BorderStroke(
-                        width = 2.dp, color = Color(0xFF9E723D)
-                    ), onClick = {
-                        onSelectedItem(colorItem)
-                    }, colors = ButtonDefaults.outlinedButtonColors(containerColor = colorItem)
-                ) {
-
-                }
-            }
-        }
-    }
-}
-
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -168,10 +118,13 @@ fun AddingPage(mainViewModel: MainViewModel, navController: NavHostController) {
         mutableStateOf("")
     }
     var colorChosen by remember {
-        mutableStateOf(Color.Transparent)
+        mutableStateOf(Color.Gray)
     }
+    mainViewModel.updateSelection(SelectionOfPages.ADDING)
     Scaffold(topBar = {
-        TopAppBarTemplate()
+        TopAppBarTemplate(mainViewModel = mainViewModel, navigationIconClick = {
+            navController.popBackStack()
+        })
     }) { paddingValues ->
         Box(
             modifier = Modifier
@@ -195,20 +148,21 @@ fun AddingPage(mainViewModel: MainViewModel, navController: NavHostController) {
                             .align(Alignment.CenterHorizontally)
                     )
                 }
-
                 ScrollButtonRow(
                     items = days,
                     selectedValue = dayChosen,
                     onSelectedItem = { dayChosen = it },
                     label = mainViewModel.myString[0],
                     borderColor = Color(0xFF9E723D),
+                    showText = true
                 )
                 ScrollButtonRow(
                     items = months,
                     selectedValue = monthChosen,
                     onSelectedItem = { monthChosen = it },
                     label = mainViewModel.myString[1],
-                    borderColor = Color(0xFF423627)
+                    borderColor = Color(0xFF423627),
+                    showText = true
                 )
                 ScrollButtonRow(
                     items = years,
@@ -216,13 +170,15 @@ fun AddingPage(mainViewModel: MainViewModel, navController: NavHostController) {
                     onSelectedItem = { yearChosen = it },
                     label = mainViewModel.myString[2],
                     borderColor = Color(0xFF423627),
+                    showText = true
                 )
-                ScrollButtonRowColor(
+                ScrollButtonRow(
                     items = colorSpacer,
                     selectedValue = colorChosen,
                     onSelectedItem = { colorChosen = it },
                     label = mainViewModel.myString[3],
                     borderColor = Color(0xFF423627),
+                    showText = false
                 )
                 Row(
                     horizontalArrangement = Arrangement.Center,
@@ -265,14 +221,14 @@ fun AddingPage(mainViewModel: MainViewModel, navController: NavHostController) {
                                 text = "0 Items"
                             )
                             IconButton(onClick = {
-                                mainViewModel.dropItemDataBase()
-                                mainViewModel.dropDateDataBase()
+
                             }) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.baseline_delete_24),
                                     contentDescription = null
                                 )
                             }
+
                         }
                     }
                 }
@@ -300,8 +256,7 @@ fun AddingPage(mainViewModel: MainViewModel, navController: NavHostController) {
                                     .show()
                             }
                         } else {
-                            Toast.makeText(context, "Fill all fields", Toast.LENGTH_SHORT)
-                                .show()
+                            Toast.makeText(context, "Fill all fields", Toast.LENGTH_SHORT).show()
                         }
                     },
                     modifier = Modifier

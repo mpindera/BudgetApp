@@ -1,14 +1,18 @@
 package com.example.budgetapp
 
+import androidx.activity.viewModels
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.budgetapp.viewmodels.MainViewModel
 import java.util.Calendar
 
 object StaticObjects {
+
     val days = (1..31).map {
         if (it < 10) {
             "0${it}"
@@ -43,7 +47,6 @@ object StaticObjects {
         colors = listOf(Color(0xFFFD418D), Color(0xFF818181)),
     )
     val colorSpacer = listOf(
-        Color.Gray,
         Color.Green,
         Color.Red,
         Color.Black,
@@ -52,5 +55,4 @@ object StaticObjects {
         Color.Magenta,
         Color.Yellow,
     )
-
 }

@@ -1,9 +1,14 @@
 package com.example.budgetapp.viewmodels
 
 import android.app.Application
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.example.budgetapp.SelectionOfPages
 import com.example.budgetapp.data.DateEntity
 import com.example.budgetapp.data.ItemEntity
 import com.example.budgetapp.database.BudgetDatabase
@@ -13,6 +18,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
+
+    var selection by mutableStateOf(SelectionOfPages.HOME)
+
+    fun updateSelection(newSelection: SelectionOfPages) {
+        selection = newSelection
+    }
 
     val myString = listOf("Day:", "Month:", "Year:", "Border color:")
 
@@ -74,5 +85,10 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         return dateImplementation.checkIfDateExists(day = day, month = month, year = year)
     }
 
+    fun deleteDate(date: DateEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            dateImplementation.deleteDate(date = date)
+        }
+    }
 
 }
