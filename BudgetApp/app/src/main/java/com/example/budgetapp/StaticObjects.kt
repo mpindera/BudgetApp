@@ -43,9 +43,6 @@ object StaticObjects {
         )
     )
 
-    val gradientBrush = Brush.horizontalGradient(
-        colors = listOf(Color(0xFFFD418D), Color(0xFF818181)),
-    )
     val colorSpacer = listOf(
         Color.Green,
         Color.Red,

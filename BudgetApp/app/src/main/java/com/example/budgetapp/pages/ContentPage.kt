@@ -64,24 +64,4 @@ fun ContentPage(mainViewModel: MainViewModel, navController: NavHostController, 
             }
         }
     }
-
-
-
-
-
-    /*LazyVerticalGrid(columns = GridCells.Fixed(2)) {
-
-        items(filteredItems) { item ->
-            Card(modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth()
-                .height(50.dp)
-                .clickable {
-
-                }
-                .shadow(elevation = 6.dp, shape = RoundedCornerShape(4.dp))) {
-                Text("${item.day} - ${item.month}")
-            }
-        }
-    }*/
 }

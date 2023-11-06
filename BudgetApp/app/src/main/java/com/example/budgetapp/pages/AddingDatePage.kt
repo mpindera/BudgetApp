@@ -28,6 +28,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -52,7 +53,6 @@ import com.example.budgetapp.R
 import com.example.budgetapp.SelectionOfPages
 import com.example.budgetapp.StaticObjects.colorSpacer
 import com.example.budgetapp.StaticObjects.days
-import com.example.budgetapp.StaticObjects.gradientBrush
 import com.example.budgetapp.StaticObjects.months
 import com.example.budgetapp.StaticObjects.years
 import com.example.budgetapp.TopAppBarTemplate
@@ -235,13 +235,13 @@ fun AddingDatePage(mainViewModel: MainViewModel, navController: NavHostControlle
                         }
                     }
                 }
-                Button(
+
+                OutlinedButton(
                     onClick = {
                         if (dayChosen.isNotEmpty() && monthChosen.isNotEmpty() && yearChosen.isNotEmpty()) {
                             val result = runBlocking {
                                 mainViewModel.checkIfDateExists(dayChosen, monthChosen, yearChosen)
                             }
-
                             if (!result) {
                                 mainViewModel.addDate(
                                     DateEntity(
@@ -265,12 +265,11 @@ fun AddingDatePage(mainViewModel: MainViewModel, navController: NavHostControlle
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 15.dp)
-                        .clip(RoundedCornerShape(16.dp))
-                        .background(brush = gradientBrush),
+                        .clip(RoundedCornerShape(16.dp)),
                     shape = CircleShape,
                     colors = ButtonDefaults.buttonColors(Color.Transparent),
                 ) {
-                    Text(text = "Add date", color = Color.White)
+                    Text(text = "Add date", color = Color.Black)
                 }
             }
         }

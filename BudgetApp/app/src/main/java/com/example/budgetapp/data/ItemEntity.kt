@@ -12,5 +12,6 @@ data class ItemEntity(
     val itemId: Int = 0,
     val itemName: String,
     val priceOfProduct: Double,
+    val category: String? = null,
     val dateId: Int
 )
