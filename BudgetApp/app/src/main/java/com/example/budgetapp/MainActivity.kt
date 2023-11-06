@@ -13,7 +13,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.budgetapp.pages.AddingPage
+import com.example.budgetapp.pages.AddingDatePage
+import com.example.budgetapp.pages.AddingItemPage
 import com.example.budgetapp.pages.ContentPage
 import com.example.budgetapp.pages.HomePage
 import com.example.budgetapp.ui.theme.BudgetAppTheme
@@ -48,14 +49,22 @@ fun NavigationAppHost(navController: NavHostController, mainViewModel: MainViewM
             val dateId = navBackStackEntry.arguments?.getString("dateId")?.toIntOrNull()
             dateId?.let { id ->
                 ContentPage(
+                    mainViewModel = mainViewModel, navController = navController, dateId = id
+                )
+            }
+        }
+        composable(Destination.AddingDatePage.route) {
+            AddingDatePage(mainViewModel, navController)
+        }
+        composable(Destination.AddingitemPage.route) { navBackStackEntry ->
+            val dateId = navBackStackEntry.arguments?.getString("dateId")?.toIntOrNull()
+            dateId?.let { id ->
+                AddingItemPage(
                     mainViewModel = mainViewModel,
                     navController = navController,
                     dateId = id
                 )
             }
-        }
-        composable(Destination.AddingPage.route) {
-            AddingPage(mainViewModel,navController)
         }
         composable(Destination.TotalPage.route) {
 

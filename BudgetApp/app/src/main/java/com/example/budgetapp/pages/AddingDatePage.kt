@@ -23,11 +23,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -80,7 +80,9 @@ fun <T> ScrollButtonRow(
     Row {
         LazyRow {
             items(items) { item ->
-                OutlinedButton(
+                val buttonColor by remember { mutableStateOf(Color(0xFFE2B277)) }
+                val isSelected = item == selectedValue
+                Button(
                     modifier = Modifier.padding(
                         top = 2.dp, bottom = 2.dp, start = 3.dp, end = 3.dp
                     ), shape = RoundedCornerShape(percent = 15), border = BorderStroke(
@@ -90,7 +92,7 @@ fun <T> ScrollButtonRow(
                     }, colors = ButtonDefaults.outlinedButtonColors(
                         containerColor = when (item) {
                             is Color -> item
-                            else -> Color.Transparent
+                            else -> if (isSelected) buttonColor else Color.Transparent
                         }
                     )
                 ) {
@@ -106,7 +108,7 @@ fun <T> ScrollButtonRow(
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddingPage(mainViewModel: MainViewModel, navController: NavHostController) {
+fun AddingDatePage(mainViewModel: MainViewModel, navController: NavHostController) {
     val context = LocalContext.current
     var dayChosen by remember {
         mutableStateOf("")
@@ -135,7 +137,7 @@ fun AddingPage(mainViewModel: MainViewModel, navController: NavHostController) {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color.LightGray)
+                        .background(Color(0xFFE2B277))
                 ) {
                     Text(
                         text = "Adding date",
@@ -194,7 +196,8 @@ fun AddingPage(mainViewModel: MainViewModel, navController: NavHostController) {
                             )
                             .fillMaxWidth()
                             .height(50.dp)
-                            .shadow(elevation = 6.dp, shape = RoundedCornerShape(4.dp))
+                            .shadow(elevation = 6.dp, shape = RoundedCornerShape(4.dp)),
+                        colors = CardDefaults.cardColors(containerColor = Color(0xFFE4DED6))
                     ) {
                         Box(
                             contentAlignment = Alignment.CenterEnd,

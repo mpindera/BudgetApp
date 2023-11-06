@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -70,9 +71,9 @@ fun HomePage(mainViewModel: MainViewModel, navController: NavHostController) {
                 .padding(padding.calculateBottomPadding() + 35.dp)
                 .align(Alignment.BottomEnd)
                 .shadow(elevation = 9.dp, shape = RoundedCornerShape(50.dp)),
-                containerColor = Color.Gray,
+                containerColor = Color(0xFFB19775),
                 onClick = {
-                    navController.navigate(Destination.AddingPage.route)
+                    navController.navigate(Destination.AddingDatePage.route)
                 }) {
                 Icon(Icons.Default.Add, "")
             }
@@ -100,14 +101,14 @@ fun CustomList(
                 )
                 .fillMaxWidth()
                 .height(50.dp)
-                .shadow(elevation = 6.dp, shape = RoundedCornerShape(4.dp))
+                .shadow(elevation = 6.dp, shape = RoundedCornerShape(6.dp))
                 .clickable {
                     navController.navigate(
                         Destination.ContentPage.route.replace(
                             "{dateId}", date.dateId.toString()
                         )
                     )
-                }) {
+                },colors = CardDefaults.cardColors(containerColor = Color(0xFFE4DED6))) {
                 Box(
                     contentAlignment = Alignment.CenterEnd, modifier = Modifier.fillMaxSize()
                 ) {
