@@ -9,7 +9,7 @@ import com.example.budgetapp.dao.ItemDao
 import com.example.budgetapp.data.DateEntity
 import com.example.budgetapp.data.ItemEntity
 
-@Database(entities = [ItemEntity::class,DateEntity::class], version = 10)
+@Database(entities = [ItemEntity::class,DateEntity::class], version = 12)
 abstract class BudgetDatabase : RoomDatabase() {
     abstract fun itemDao(): ItemDao
     abstract fun dateDao(): DateDao
