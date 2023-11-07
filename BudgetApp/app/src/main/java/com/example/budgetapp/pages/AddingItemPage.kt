@@ -199,6 +199,7 @@ fun AddingItemPage(mainViewModel: MainViewModel, navController: NavHostControlle
                                     dateId = dateId
                                 )
                             )
+                            navController.popBackStack()
                         }
                     }) {
                     Text("Add Item")

@@ -29,13 +29,14 @@ import androidx.navigation.NavHostController
 import com.example.budgetapp.Destination
 import com.example.budgetapp.SelectionOfPages
 import com.example.budgetapp.TopAppBarTemplate
+import com.example.budgetapp.data.ItemEntity
 import com.example.budgetapp.viewmodels.MainViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ContentPage(mainViewModel: MainViewModel, navController: NavHostController, dateId: Int) {
     mainViewModel.updateSelection(SelectionOfPages.CONTENT)
-    val dateEntities = mainViewModel.readAllDataDateEntity.observeAsState(emptyList()).value
+    val dateEntities = mainViewModel.readAllDataItemEntity.observeAsState(emptyList()).value
     val filteredItems = dateEntities.filter { it.dateId == dateId }
 
     Scaffold(topBar = {
@@ -48,6 +49,7 @@ fun ContentPage(mainViewModel: MainViewModel, navController: NavHostController, 
                 .fillMaxSize()
                 .padding(top = paddingValues.calculateTopPadding()),
         ) {
+            ShowListOfItems(filteredItems)
             FloatingActionButton(modifier = Modifier
                 .padding(paddingValues.calculateBottomPadding() + 35.dp)
                 .align(Alignment.BottomEnd)
@@ -61,6 +63,21 @@ fun ContentPage(mainViewModel: MainViewModel, navController: NavHostController, 
                     )
                 }) {
                 Icon(Icons.Default.Add, "")
+            }
+        }
+    }
+}
+
+@Composable
+fun ShowListOfItems(filteredItems: List<ItemEntity>) {
+    LazyVerticalGrid(columns = GridCells.Fixed(2)) {
+        items(filteredItems) { item ->
+            Card(modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth()
+                .height(50.dp)
+                .shadow(elevation = 6.dp, shape = RoundedCornerShape(4.dp))) {
+                Text("${item.itemName} - ${item.priceOfProduct}")
             }
         }
     }
