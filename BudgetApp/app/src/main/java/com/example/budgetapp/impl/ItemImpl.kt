@@ -17,11 +17,15 @@ class ItemImpl(private val budgetDatabase: ItemDao) : ItemDao {
         return budgetDatabase.getAllItem()
     }
 
-    override suspend fun deleteItem(item: ItemEntity) = withContext(Dispatchers.IO) {
-        budgetDatabase.deleteItem(item = item)
+    override suspend fun deleteItem(itemId: Int) = withContext(Dispatchers.IO) {
+        budgetDatabase.deleteItem(itemId = itemId)
     }
 
     override suspend fun dropDatabaseItem() = withContext(Dispatchers.IO) {
         budgetDatabase.dropDatabaseItem()
+    }
+
+    override suspend fun updateItem(item: ItemEntity) {
+        budgetDatabase.updateItem(item = item)
     }
 }

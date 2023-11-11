@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.example.budgetapp.dao.DateDao
 import com.example.budgetapp.data.DateEntity
 import com.example.budgetapp.relactions.DateWithItems
+import kotlinx.coroutines.runBlocking
 
 
 class DateImpl(private val budgetDatabase: DateDao) : DateDao {
@@ -25,11 +26,17 @@ class DateImpl(private val budgetDatabase: DateDao) : DateDao {
         return budgetDatabase.checkIfDateExists(day = day, month = month, year = year)
     }
 
-    override suspend fun deleteDate(date: DateEntity) {
-        budgetDatabase.deleteDate(date = date)
+    override suspend fun deleteDate(dateId: Int) {
+        budgetDatabase.deleteDate(dateId = dateId)
     }
 
     override suspend fun dropDatabaseDate() {
         budgetDatabase.dropDatabaseDate()
+    }
+
+    override suspend fun getItemsCountForDate(dateId: Int): Int {
+        return runBlocking {
+            budgetDatabase.getItemsCountForDate(dateId)
+        }
     }
 }

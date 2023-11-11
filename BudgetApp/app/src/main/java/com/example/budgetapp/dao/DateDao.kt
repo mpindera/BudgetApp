@@ -26,10 +26,14 @@ interface DateDao {
     @Query("SELECT EXISTS(SELECT * FROM DATE_ENTITY WHERE day = :day AND month = :month AND year = :year)")
     suspend fun checkIfDateExists(day: String, month: String, year: String): Boolean
 
-    @Delete
-    suspend fun deleteDate(date: DateEntity)
+    @Query("DELETE FROM date_entity WHERE dateId=:dateId")
+    suspend fun deleteDate(dateId: Int)
 
     @Query("DELETE FROM DATE_ENTITY")
     suspend fun dropDatabaseDate()
 
+
+    @Transaction
+    @Query("SELECT COUNT(*) FROM ITEM_ENTITY WHERE dateId = :dateId")
+    suspend fun getItemsCountForDate(dateId: Int): Int
 }

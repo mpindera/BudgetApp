@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -30,30 +31,35 @@ fun TopAppBarTemplate(
     mainViewModel: MainViewModel,
     actionIconClick: () -> Unit = {}
 ) {
-    val isAddingOrContent =
-        (mainViewModel.selection == SelectionOfPages.ADDING) || (mainViewModel.selection == SelectionOfPages.CONTENT)
+    val isAdding = mainViewModel.selection == SelectionOfPages.ADDING
     val isHome = mainViewModel.selection == SelectionOfPages.HOME
+    val isContent = mainViewModel.selection == SelectionOfPages.CONTENT
 
     TopAppBar(navigationIcon = {
 
-        IconButton(enabled = isAddingOrContent, onClick = {
+        IconButton(onClick = {
             navigationIconClick()
         }) {
-            if (isAddingOrContent) {
+            if (isAdding || isContent) {
                 Icon(
-                    imageVector = Icons.Default.ArrowBack, contentDescription = "Menu Icon"
+                    imageVector = Icons.Default.ArrowBack, contentDescription = "Arrow back"
                 )
             }
         }
     }, actions = {
 
-        IconButton(enabled = isHome, onClick = {
+        IconButton(enabled = (isContent || isHome), onClick = {
             actionIconClick()
         }) {
             if (isHome) {
                 Icon(
                     painter = painterResource(id = R.drawable.baseline_delete_forever_24),
-                    contentDescription = "Menu Icon"
+                    contentDescription = "Clear all"
+                )
+            } else if (isContent) {
+                Icon(
+                    painter = painterResource(id = R.drawable.baseline_query_stats_24),
+                    contentDescription = "Stats"
                 )
             }
         }

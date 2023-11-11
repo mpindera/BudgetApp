@@ -3,7 +3,6 @@ package com.example.budgetapp.viewmodels
 import android.app.Application
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -16,6 +15,7 @@ import com.example.budgetapp.impl.DateImpl
 import com.example.budgetapp.impl.ItemImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class MainViewModel(app: Application) : AndroidViewModel(app) {
 
@@ -44,14 +44,14 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun addItem(item: ItemEntity) {
-        viewModelScope.launch(Dispatchers.IO) {
-            itemImplementation.insertItem(item = item)
+        viewModelScope.launch {
+            itemImplementation.insertItem(item)
         }
     }
 
-    fun deleteItem(item: ItemEntity) {
+    fun deleteItem(itemId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            itemImplementation.deleteItem(item = item)
+            itemImplementation.deleteItem(itemId = itemId)
         }
     }
 
@@ -61,6 +61,11 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         }
     }
 
+    fun updateItem(item: ItemEntity) {
+        viewModelScope.launch(Dispatchers.IO) {
+            itemImplementation.updateItem(item)
+        }
+    }
     ///
     fun addDate(date: DateEntity) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -85,9 +90,14 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         return dateImplementation.checkIfDateExists(day = day, month = month, year = year)
     }
 
-    fun deleteDate(date: DateEntity) {
+    fun deleteDate(dateId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            dateImplementation.deleteDate(date = date)
+            dateImplementation.deleteDate(dateId = dateId)
+        }
+    }
+    fun getItemsCountForDate(dateId: Int): Int {
+        return runBlocking {
+            dateImplementation.getItemsCountForDate(dateId)
         }
     }
 

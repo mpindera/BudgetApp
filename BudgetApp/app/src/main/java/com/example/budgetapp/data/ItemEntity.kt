@@ -8,10 +8,11 @@ import androidx.room.Relation
 
 @Entity(tableName = "item_entity")
 data class ItemEntity(
-    @PrimaryKey(autoGenerate = false)
+    @PrimaryKey(autoGenerate = true)
     val itemId: Int = 0,
     val itemName: String,
     val priceOfProduct: Double,
     val category: String? = null,
+    val currency: String,
     val dateId: Int
 )

@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,6 +31,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -51,9 +53,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.budgetapp.R
 import com.example.budgetapp.SelectionOfPages
+import com.example.budgetapp.StaticObjects
 import com.example.budgetapp.StaticObjects.colorSpacer
 import com.example.budgetapp.StaticObjects.days
-import com.example.budgetapp.StaticObjects.months
 import com.example.budgetapp.StaticObjects.years
 import com.example.budgetapp.TopAppBarTemplate
 import com.example.budgetapp.data.DateEntity
@@ -159,7 +161,7 @@ fun AddingDatePage(mainViewModel: MainViewModel, navController: NavHostControlle
                     showText = true
                 )
                 ScrollButtonRow(
-                    items = months,
+                    items = StaticObjects.getLocalizedMonthNames(),
                     selectedValue = monthChosen,
                     onSelectedItem = { monthChosen = it },
                     label = mainViewModel.myString[1],
@@ -196,7 +198,8 @@ fun AddingDatePage(mainViewModel: MainViewModel, navController: NavHostControlle
                             )
                             .fillMaxWidth()
                             .height(50.dp)
-                            .shadow(elevation = 6.dp, shape = RoundedCornerShape(4.dp)),
+                            .clip(shape = RoundedCornerShape(3.dp))
+                            .border(0.3.dp, Color.Black, ShapeDefaults.Medium),
                         colors = CardDefaults.cardColors(containerColor = Color(0xFFE4DED6))
                     ) {
                         Box(
@@ -223,9 +226,7 @@ fun AddingDatePage(mainViewModel: MainViewModel, navController: NavHostControlle
                                     .padding(top = 2.dp, bottom = 2.dp, start = 15.dp),
                                 text = "0 Items"
                             )
-                            IconButton(onClick = {
-
-                            }) {
+                            IconButton(enabled = false, onClick = {}) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.baseline_delete_24),
                                     contentDescription = null
