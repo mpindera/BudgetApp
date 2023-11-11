@@ -2,6 +2,7 @@ package com.example.budgetapp.pages
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -72,12 +73,16 @@ fun ContentPage(mainViewModel: MainViewModel, navController: NavHostController, 
 fun ShowListOfItems(filteredItems: List<ItemEntity>) {
     LazyVerticalGrid(columns = GridCells.Fixed(2)) {
         items(filteredItems) { item ->
-            Card(modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth()
-                .height(50.dp)
-                .shadow(elevation = 6.dp, shape = RoundedCornerShape(4.dp))) {
-                Text("${item.itemName} - ${item.priceOfProduct}")
+            Card(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth()
+                    .height(IntrinsicSize.Min)
+                    .shadow(elevation = 6.dp, shape = RoundedCornerShape(4.dp))
+            ) {
+                Text(item.itemName)
+                Text("${item.priceOfProduct}")
+                Text(item.category.toString())
             }
         }
     }

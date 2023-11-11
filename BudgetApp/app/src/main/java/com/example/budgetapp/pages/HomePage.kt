@@ -2,6 +2,7 @@
 
 package com.example.budgetapp.pages
 
+import android.app.Application
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -39,11 +40,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.budgetapp.Destination
 import com.example.budgetapp.R
 import com.example.budgetapp.SelectionOfPages
@@ -146,53 +149,9 @@ fun CustomList(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun Prev() {
-    Card(
-        modifier = Modifier
-            .padding(top = 8.dp, start = 8.dp, end = 8.dp)
-            .fillMaxWidth()
-            .height(50.dp)
-            .shadow(elevation = 6.dp, shape = RoundedCornerShape(4.dp))
-    ) {
-        Box(
-            contentAlignment = Alignment.CenterEnd, modifier = Modifier.fillMaxSize()
-        ) {
-            Spacer(
-                modifier = Modifier
-                    .background(Color.Green)
-                    .width(10.dp)
-                    .fillMaxHeight()
-                    .align(Alignment.CenterStart)
-            )
-
-            Text(
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(top = 2.dp, bottom = 2.dp, start = 15.dp),
-                fontWeight = FontWeight.Bold,
-                text = "03 / 07 / 2023"
-            )
-            Text(
-                modifier = Modifier
-                    .align(Alignment.BottomStart)
-                    .padding(top = 2.dp, bottom = 2.dp, start = 15.dp), text = "2 Items"
-            )
-            IconButton(onClick = {
-
-            }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.baseline_delete_24),
-                    contentDescription = null
-                )
-            }
+class TestApplication : Application()
 
 
-        }
-
-    }
-}
 
 @Composable
 fun AlertDialogClear(mainViewModel: MainViewModel, onDismiss: () -> Unit) {

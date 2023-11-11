@@ -8,6 +8,10 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.example.budgetapp.api.RetrofitInstance
+import com.example.budgetapp.viewmodels.CurrencyViewModel
 import com.example.budgetapp.viewmodels.MainViewModel
 import java.util.Calendar
 
@@ -52,4 +56,9 @@ object StaticObjects {
         Color.Magenta,
         Color.Yellow,
     )
+
+    val apiUtil = CurrencyViewModel(api = RetrofitInstance().api)
+
+
+    val itemText = mutableListOf("Enter Item Name","Enter Item Price","Enter Category","Enter Currency")
 }

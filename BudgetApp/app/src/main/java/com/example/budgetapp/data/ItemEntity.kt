@@ -13,5 +13,6 @@ data class ItemEntity(
     val itemName: String,
     val priceOfProduct: Double,
     val category: String? = null,
+    val currency: String,
     val dateId: Int
 )

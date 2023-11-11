@@ -18,6 +18,7 @@ import com.example.budgetapp.pages.AddingItemPage
 import com.example.budgetapp.pages.ContentPage
 import com.example.budgetapp.pages.HomePage
 import com.example.budgetapp.ui.theme.BudgetAppTheme
+import com.example.budgetapp.viewmodels.CurrencyViewModel
 import com.example.budgetapp.viewmodels.MainViewModel
 
 class MainActivity : ComponentActivity() {
@@ -31,7 +32,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             BudgetAppTheme {
                 val navController = rememberNavController()
-                NavigationAppHost(navController = navController, mainViewModel = mainViewModel)
+                NavigationAppHost(
+                    navController = navController,
+                    mainViewModel = mainViewModel,
+                )
 
             }
         }
@@ -40,7 +44,10 @@ class MainActivity : ComponentActivity() {
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun NavigationAppHost(navController: NavHostController, mainViewModel: MainViewModel) {
+fun NavigationAppHost(
+    navController: NavHostController,
+    mainViewModel: MainViewModel,
+) {
     NavHost(navController = navController, startDestination = Destination.HomePage.route) {
         composable(Destination.HomePage.route) {
             HomePage(mainViewModel, navController)
