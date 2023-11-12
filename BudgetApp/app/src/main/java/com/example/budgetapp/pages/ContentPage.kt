@@ -45,8 +45,10 @@ import androidx.navigation.NavHostController
 import com.example.budgetapp.Destination
 import com.example.budgetapp.SelectionOfPages
 import com.example.budgetapp.TopAppBarTemplate
+import com.example.budgetapp.dao.TotalPriceResult
 import com.example.budgetapp.data.ItemEntity
 import com.example.budgetapp.viewmodels.MainViewModel
+import kotlinx.coroutines.runBlocking
 
 @Composable
 fun ContentPage(mainViewModel: MainViewModel, navController: NavHostController, dateId: Int) {
@@ -54,11 +56,18 @@ fun ContentPage(mainViewModel: MainViewModel, navController: NavHostController, 
     val dateEntities = mainViewModel.readAllDataItemEntity.observeAsState(emptyList()).value
     val filteredItems = dateEntities.filter { it.dateId == dateId }
 
-    Scaffold(topBar = {
-        TopAppBarTemplate(mainViewModel = mainViewModel, navigationIconClick = {
-            navController.popBackStack()
-        })
-    }) { paddingValues ->
+    Scaffold(
+        topBar = {
+            TopAppBarTemplate(mainViewModel = mainViewModel, navigationIconClick = {
+                navController.popBackStack()
+            }, actionIconClick = {
+                navController.navigate(
+                    Destination.TotalPage.route.replace(
+                        "{dateId}", dateId.toString()
+                    )
+                )
+            })
+        }) { paddingValues ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -98,7 +107,7 @@ fun ShowListOfItems(
                     .padding(8.dp)
                     .fillMaxWidth()
                     .height(IntrinsicSize.Min)
-                    .border(0.5.dp, Color.Black,ShapeDefaults.Small),
+                    .border(0.5.dp, Color.Black, ShapeDefaults.Small),
                 colors = CardDefaults.cardColors(
                     containerColor = Color(223, 222, 222, 255)
                 ),
@@ -157,12 +166,9 @@ fun ShowListOfItems(
                             val selectedItem = filteredItems.find { it.itemId == itemId }
                             selectedItem?.let {
                                 AlertDialogDeleteItem(
-                                    mainViewModel = mainViewModel,
-                                    itemId = itemId,
-                                    onDismiss = {
+                                    mainViewModel = mainViewModel, itemId = itemId, onDismiss = {
                                         deleteItemDialogItemId = null
-                                    },
-                                    item = it
+                                    }, item = it
                                 )
                             }
                         }
@@ -175,28 +181,22 @@ fun ShowListOfItems(
 
 @Composable
 fun AlertDialogDeleteItem(
-    mainViewModel: MainViewModel,
-    itemId: Int,
-    onDismiss: () -> Unit,
-    item: ItemEntity
+    mainViewModel: MainViewModel, itemId: Int, onDismiss: () -> Unit, item: ItemEntity
 ) {
-    AlertDialogClear(onDissmiss = { onDismiss() },
-        title = {
-            Text("Do you want to delete ${item.itemName} | ${item.priceOfProduct} ${item.currency} | ${item.category}?")
-        },
-        confirmButton = {
-            Button(onClick = {
-                mainViewModel.deleteItem(itemId = itemId)
-                onDismiss()
-            }) {
-                Text("Yes")
-            }
-        },
-        dismissButton = {
-            Button(onClick = {
-                onDismiss()
-            }) {
-                Text("Cancel")
-            }
-        })
+    AlertDialogClear(onDissmiss = { onDismiss() }, title = {
+        Text("Do you want to delete ${item.itemName} | ${item.priceOfProduct} ${item.currency} | ${item.category}?")
+    }, confirmButton = {
+        Button(onClick = {
+            mainViewModel.deleteItem(itemId = itemId)
+            onDismiss()
+        }) {
+            Text("Yes")
+        }
+    }, dismissButton = {
+        Button(onClick = {
+            onDismiss()
+        }) {
+            Text("Cancel")
+        }
+    })
 }

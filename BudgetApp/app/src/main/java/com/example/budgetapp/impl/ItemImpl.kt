@@ -2,6 +2,7 @@ package com.example.budgetapp.impl
 
 import androidx.lifecycle.LiveData
 import com.example.budgetapp.dao.ItemDao
+import com.example.budgetapp.dao.TotalPriceResult
 import com.example.budgetapp.data.ItemEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -28,4 +29,18 @@ class ItemImpl(private val budgetDatabase: ItemDao) : ItemDao {
     override suspend fun updateItem(item: ItemEntity) {
         budgetDatabase.updateItem(item = item)
     }
+
+    override suspend fun totalPrice(dateId: Int): List<TotalPriceResult> {
+        return budgetDatabase.totalPrice(dateId = dateId)
+    }
+
+    override suspend fun totalPriceOfAllSelectedDate(
+        firstDateId: Int, secondDateId: Int
+    ): List<TotalPriceResult> {
+        return budgetDatabase.totalPriceOfAllSelectedDate(
+            firstDateId = firstDateId, secondDateId = secondDateId
+        )
+    }
+
+
 }

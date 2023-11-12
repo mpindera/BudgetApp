@@ -242,6 +242,7 @@ fun AddingDatePage(mainViewModel: MainViewModel, navController: NavHostControlle
                         if (dayChosen.isNotEmpty() && monthChosen.isNotEmpty() && yearChosen.isNotEmpty()) {
                             val result = runBlocking {
                                 mainViewModel.checkIfDateExists(dayChosen, monthChosen, yearChosen)
+
                             }
                             if (!result) {
                                 mainViewModel.addDate(
