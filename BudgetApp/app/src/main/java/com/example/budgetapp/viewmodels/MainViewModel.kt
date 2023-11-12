@@ -8,6 +8,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.example.budgetapp.SelectionOfPages
+import com.example.budgetapp.dao.TotalPriceResult
 import com.example.budgetapp.data.DateEntity
 import com.example.budgetapp.data.ItemEntity
 import com.example.budgetapp.database.BudgetDatabase
@@ -43,6 +44,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         readAllDataDateEntity = dateImplementation.readAllDataFormDate
     }
 
+    /** Item **/
     fun addItem(item: ItemEntity) {
         viewModelScope.launch {
             itemImplementation.insertItem(item)
@@ -66,10 +68,36 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             itemImplementation.updateItem(item)
         }
     }
-    ///
+
+    suspend fun totalPrice(dateId: Int): List<TotalPriceResult> {
+        return itemImplementation.totalPrice(dateId)
+    }
+
+    suspend fun totalPriceOfAllSelectedDate(
+        firstDateId: Int,
+        secondDateId: Int
+    ): List<TotalPriceResult> {
+        return itemImplementation.totalPriceOfAllSelectedDate(
+            firstDateId = firstDateId,
+            secondDateId = secondDateId
+        )
+    }
+
+    /** Date **/
     fun addDate(date: DateEntity) {
         viewModelScope.launch(Dispatchers.IO) {
             dateImplementation.insertDate(date = date)
+        }
+    }
+    fun deleteDate(dateId: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            dateImplementation.deleteDate(dateId = dateId)
+        }
+    }
+
+    fun getItemsCountForDate(dateId: Int): Int {
+        return runBlocking {
+            dateImplementation.getItemsCountForDate(dateId)
         }
     }
 
@@ -90,15 +118,6 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         return dateImplementation.checkIfDateExists(day = day, month = month, year = year)
     }
 
-    fun deleteDate(dateId: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            dateImplementation.deleteDate(dateId = dateId)
-        }
-    }
-    fun getItemsCountForDate(dateId: Int): Int {
-        return runBlocking {
-            dateImplementation.getItemsCountForDate(dateId)
-        }
-    }
+
 
 }

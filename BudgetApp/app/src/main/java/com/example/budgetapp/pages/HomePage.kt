@@ -46,6 +46,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.budgetapp.Destination
 import com.example.budgetapp.R
@@ -60,8 +61,10 @@ fun HomePage(mainViewModel: MainViewModel, navController: NavHostController) {
     var isAlertDialogAllVisible by remember { mutableStateOf(false) }
 
     Scaffold(topBar = {
-        TopAppBarTemplate(mainViewModel = mainViewModel, actionIconClick = {
+        TopAppBarTemplate(mainViewModel = mainViewModel, navigationIconClick = {
             isAlertDialogAllVisible = true
+        }, actionIconClick = {
+
         })
     }, content = { padding ->
         Box(
@@ -164,9 +167,7 @@ fun CustomList(
                             val selectedItem = dateEntitiesSize.find { it.dateId == dateId }
                             selectedItem?.let {
                                 AlertDialogClearOneOfDateVisible(
-                                    mainViewModel = mainViewModel,
-                                    date=it,
-                                    dateId=dateId
+                                    mainViewModel = mainViewModel, date = it, dateId = dateId
                                 ) {
                                     isAlertDialogOneOfDateVisible = false
 
@@ -205,9 +206,8 @@ fun AlertDialogClearOneOfDateVisible(
 
 @Composable
 fun AlertDialogClearAll(mainViewModel: MainViewModel, onDismiss: () -> Unit) {
-    AlertDialogClear(
-        onDissmiss = { onDismiss() },
-        title = { Text("Do you want to delete everything?") },
+    AlertDialogClear(onDissmiss = { onDismiss() },
+        title = { Text("Do you want to delete everything?", fontSize = 16.sp) },
         confirmButton = {
             Button(onClick = {
                 mainViewModel.dropItemDataBase()
@@ -224,6 +224,5 @@ fun AlertDialogClearAll(mainViewModel: MainViewModel, onDismiss: () -> Unit) {
             }) {
                 Text("Cancel")
             }
-        }
-    )
+        })
 }
