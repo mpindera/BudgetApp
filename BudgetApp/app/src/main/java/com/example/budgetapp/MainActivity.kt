@@ -17,7 +17,7 @@ import com.example.budgetapp.pages.AddingDatePage
 import com.example.budgetapp.pages.AddingItemPage
 import com.example.budgetapp.pages.ContentPage
 import com.example.budgetapp.pages.HomePage
-import com.example.budgetapp.pages.TotalPage
+import com.example.budgetapp.pages.TotalPricePage
 import com.example.budgetapp.pages.TotalPriceOfDates
 import com.example.budgetapp.pages.UpdateItemPage
 import com.example.budgetapp.ui.theme.BudgetAppTheme
@@ -86,10 +86,10 @@ fun NavigationAppHost(
             }
 
         }
-        composable(Destination.TotalPage.route) { navBackStackEntry ->
+        composable(Destination.TotalPricePage.route) { navBackStackEntry ->
             val dateId = navBackStackEntry.arguments?.getString("dateId")?.toIntOrNull()
             dateId?.let { id ->
-                TotalPage(
+                TotalPricePage(
                     mainViewModel = mainViewModel,
                     navController = navController,
                     dateId = id
@@ -98,8 +98,6 @@ fun NavigationAppHost(
 
         }
         composable(Destination.TotalPriceOfDates.route) { navBackStackEntry ->
-            val dateId = navBackStackEntry.arguments?.getString("dateId")?.toIntOrNull()
-
             TotalPriceOfDates(
                 mainViewModel = mainViewModel,
                 navController = navController,

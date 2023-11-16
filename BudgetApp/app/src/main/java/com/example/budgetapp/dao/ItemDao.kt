@@ -30,10 +30,9 @@ interface ItemDao {
     suspend fun totalPrice(dateId: Int): List<TotalPriceResult>
 
     @Query("SELECT currency, SUM(priceOfProduct) as totalPrice FROM ITEM_ENTITY WHERE dateId BETWEEN :firstDateId AND :secondDateId GROUP BY currency")
-    suspend fun totalPriceOfAllSelectedDate(firstDateId: Int, secondDateId: Int): List<TotalPriceResult>
-
-
-
+    suspend fun totalPriceOfAllSelectedDate(
+        firstDateId: Int, secondDateId: Int
+    ): List<TotalPriceResult>
 
 
 }

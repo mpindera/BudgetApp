@@ -107,7 +107,6 @@ fun CustomList(
 
 
     LazyVerticalGrid(columns = GridCells.Fixed(1)) {
-
         items(dateEntitiesSize) { date ->
             val textOfSize =
                 if (mainViewModel.getItemsCountForDate(date.dateId) > 1) "Items" else "Item"
