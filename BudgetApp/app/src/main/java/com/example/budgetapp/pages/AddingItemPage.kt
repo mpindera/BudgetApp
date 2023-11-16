@@ -239,7 +239,8 @@ fun AddingItemPage(
                                 .width(200.dp)
                                 .height(100.dp)
                         ) {
-                            for (item in itemEntities) {
+                            val uniqueCategories = itemEntities.distinctBy { it.category }
+                            for (item in uniqueCategories) {
                                 DropdownMenuItem(text = {
                                     Text(item.category.toString())
                                 }, onClick = {

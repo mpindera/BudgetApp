@@ -60,12 +60,6 @@ fun ContentPage(mainViewModel: MainViewModel, navController: NavHostController, 
         topBar = {
             TopAppBarTemplate(mainViewModel = mainViewModel, navigationIconClick = {
                 navController.popBackStack()
-            }, actionIconClick = {
-                navController.navigate(
-                    Destination.TotalPage.route.replace(
-                        "{dateId}", dateId.toString()
-                    )
-                )
             })
         }) { paddingValues ->
         Box(

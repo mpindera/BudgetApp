@@ -34,13 +34,13 @@ fun TopAppBarTemplate(
     val isAdding = mainViewModel.selection == SelectionOfPages.ADDING
     val isHome = mainViewModel.selection == SelectionOfPages.HOME
     val isContent = mainViewModel.selection == SelectionOfPages.CONTENT
-    val isTotalPage = mainViewModel.selection == SelectionOfPages.CONTENT
+    val isisTotalPricePage = mainViewModel.selection == SelectionOfPages.CONTENT
 
     TopAppBar(navigationIcon = {
         IconButton(onClick = {
             navigationIconClick()
         }) {
-            if (isAdding || isContent || isTotalPage) {
+            if (isAdding || isContent || isisTotalPricePage) {
                 Icon(
                     imageVector = Icons.Default.ArrowBack, contentDescription = "Arrow back"
                 )
@@ -52,11 +52,10 @@ fun TopAppBarTemplate(
             }
         }
     }, actions = {
-
-        IconButton(enabled = (isContent || isHome), onClick = {
+        IconButton(enabled = isHome, onClick = {
             actionIconClick()
         }) {
-            if (isContent || isHome) {
+            if (isHome) {
                 Icon(
                     painter = painterResource(id = R.drawable.baseline_query_stats_24),
                     contentDescription = "Stats"
