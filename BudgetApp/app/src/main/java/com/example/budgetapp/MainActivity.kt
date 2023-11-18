@@ -23,7 +23,6 @@ class MainActivity : ComponentActivity() {
     private val mainViewModel by viewModels<MainViewModel>()
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
