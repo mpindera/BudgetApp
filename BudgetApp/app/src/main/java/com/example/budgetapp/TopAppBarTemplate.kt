@@ -4,6 +4,7 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
@@ -31,23 +32,21 @@ fun TopAppBarTemplate(
     mainViewModel: MainViewModel,
     actionIconClick: () -> Unit = {}
 ) {
-    val isAdding = mainViewModel.selection == SelectionOfPages.ADDING
     val isHome = mainViewModel.selection == SelectionOfPages.HOME
-    val isContent = mainViewModel.selection == SelectionOfPages.CONTENT
-    val isisTotalPricePage = mainViewModel.selection == SelectionOfPages.CONTENT
 
     TopAppBar(navigationIcon = {
         IconButton(onClick = {
             navigationIconClick()
         }) {
-            if (isAdding || isContent || isisTotalPricePage) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack, contentDescription = "Arrow back"
-                )
-            } else {
+            if (isHome) {
                 Icon(
                     painter = painterResource(id = R.drawable.baseline_delete_forever_24),
                     contentDescription = "Clear all"
+                )
+            } else {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Arrow back"
                 )
             }
         }

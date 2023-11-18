@@ -89,6 +89,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             dateImplementation.insertDate(date = date)
         }
     }
+
     fun deleteDate(dateId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             dateImplementation.deleteDate(dateId = dateId)
@@ -117,7 +118,6 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
     suspend fun checkIfDateExists(day: String, month: String, year: String): Boolean {
         return dateImplementation.checkIfDateExists(day = day, month = month, year = year)
     }
-
 
 
 }

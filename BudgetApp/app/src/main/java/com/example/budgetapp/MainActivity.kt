@@ -1,12 +1,10 @@
 package com.example.budgetapp
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
@@ -18,14 +16,12 @@ import com.example.budgetapp.pages.AddingItemPage
 import com.example.budgetapp.pages.ContentPage
 import com.example.budgetapp.pages.HomePage
 import com.example.budgetapp.pages.TotalPriceOfDates
-import com.example.budgetapp.pages.UpdateItemPage
 import com.example.budgetapp.ui.theme.BudgetAppTheme
 import com.example.budgetapp.viewmodels.MainViewModel
 
 class MainActivity : ComponentActivity() {
     private val mainViewModel by viewModels<MainViewModel>()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +39,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationAppHost(
     navController: NavHostController,
@@ -70,20 +65,9 @@ fun NavigationAppHost(
                 AddingItemPage(
                     mainViewModel = mainViewModel,
                     navController = navController,
-                    dateId = id
+                    dateId = id,
                 )
             }
-        }
-        composable(Destination.UpdateItemPage.route) { navBackStackEntry ->
-            val itemId = navBackStackEntry.arguments?.getString("itemId")?.toIntOrNull()
-            itemId?.let { id ->
-                UpdateItemPage(
-                    mainViewModel = mainViewModel,
-                    navController = navController,
-                    itemId = id
-                )
-            }
-
         }
         composable(Destination.TotalPriceOfDates.route) { navBackStackEntry ->
             TotalPriceOfDates(

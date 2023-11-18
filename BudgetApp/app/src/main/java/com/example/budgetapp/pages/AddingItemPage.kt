@@ -54,14 +54,13 @@ import com.example.budgetapp.data.ItemEntity
 import com.example.budgetapp.viewmodels.MainViewModel
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddingItemPage(
     mainViewModel: MainViewModel,
     navController: NavHostController,
     dateId: Int,
 ) {
-    mainViewModel.updateSelection(SelectionOfPages.ADDING)
+
     val itemEntities = mainViewModel.readAllDataItemEntity.observeAsState(emptyList()).value
     val apiCurrency = apiUtil.currency.value
 
@@ -86,9 +85,11 @@ fun AddingItemPage(
     var expanded by remember {
         mutableStateOf(false)
     }
+
     val context = LocalContext.current
     var showSheet by remember { mutableStateOf(false) }
     val currencyNames = mutableMapOf<String, String>()
+    val uniqueCurrencyPairs = currencyNames.entries.distinctBy { it.value }
 
     apiCurrency.forEach { currency ->
         currency.currencies?.forEach { (currencyKey, currencyData) ->
@@ -98,7 +99,7 @@ fun AddingItemPage(
             }
         }
     }
-    val uniqueCurrencyPairs = currencyNames.entries.distinctBy { it.value }
+
     Scaffold(topBar = {
         TopAppBarTemplate(mainViewModel = mainViewModel, navigationIconClick = {
             navController.popBackStack()
@@ -190,7 +191,7 @@ fun AddingItemPage(
                     )
                 }
                 //Item Category
-                Row() {
+                Row {
                     Column {
                         Text(
                             text = "Category:",
