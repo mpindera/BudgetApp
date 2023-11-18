@@ -41,6 +41,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.budgetapp.Destination
 import com.example.budgetapp.SelectionOfPages
@@ -136,18 +137,6 @@ fun ShowListOfItems(
                     }
                     Row(modifier = Modifier.align(Alignment.CenterEnd)) {
                         IconButton(onClick = {
-                            navController.navigate(
-                                Destination.UpdateItemPage.route.replace(
-                                    "{itemId}", item.itemId.toString()
-                                )
-                            )
-                        }) {
-                            Icon(Icons.Default.Edit, contentDescription = null)
-                        }
-
-                        Spacer(modifier = Modifier.padding(1.dp))
-
-                        IconButton(onClick = {
                             isAlertDialogDeleteItemVisible = true
                             deleteItemDialogItemId = item.itemId
                         }) {
@@ -178,7 +167,7 @@ fun AlertDialogDeleteItem(
     mainViewModel: MainViewModel, itemId: Int, onDismiss: () -> Unit, item: ItemEntity
 ) {
     AlertDialogClear(onDissmiss = { onDismiss() }, title = {
-        Text("Do you want to delete ${item.itemName} | ${item.priceOfProduct} ${item.currency} | ${item.category}?")
+        Text("Do you want to delete ${item.itemName} | ${item.priceOfProduct} ${item.currency} | ${item.category}?", fontSize = 16.sp)
     }, confirmButton = {
         Button(onClick = {
             mainViewModel.deleteItem(itemId = itemId)

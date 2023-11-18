@@ -185,7 +185,7 @@ fun AlertDialogClearOneOfDateVisible(
     mainViewModel: MainViewModel, date: DateEntity, dateId: Int, onDismiss: () -> Unit
 ) {
     AlertDialogClear(onDissmiss = { onDismiss() },
-        title = { Text("Do you want to delete ${date.day}/${date.month}/${date.year}?") },
+        title = { Text("Do you want to delete ${date.day}/${date.month}/${date.year}?", fontSize = 16.sp) },
         confirmButton = {
             Button(onClick = {
                 mainViewModel.deleteDate(dateId = dateId)

@@ -1,4 +1,4 @@
-package com.example.budgetapp.pages
+package com.example.budgetapp.pages.addingpages
 
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api

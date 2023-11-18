@@ -11,8 +11,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.budgetapp.pages.AddingDatePage
-import com.example.budgetapp.pages.AddingItemPage
+import com.example.budgetapp.pages.addingpages.AddingDatePage
+import com.example.budgetapp.pages.addingpages.AddingItemPage
 import com.example.budgetapp.pages.ContentPage
 import com.example.budgetapp.pages.HomePage
 import com.example.budgetapp.pages.TotalPriceOfDates

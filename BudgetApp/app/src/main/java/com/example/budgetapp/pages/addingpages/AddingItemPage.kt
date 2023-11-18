@@ -1,4 +1,4 @@
-package com.example.budgetapp.pages
+package com.example.budgetapp.pages.addingpages
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -47,7 +47,6 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.budgetapp.SelectionOfPages
 import com.example.budgetapp.StaticObjects.apiUtil
 import com.example.budgetapp.TopAppBarTemplate
 import com.example.budgetapp.data.ItemEntity
